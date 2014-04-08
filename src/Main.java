@@ -13,6 +13,7 @@ public class Main {
     public static void main(String[]args){
         int pomocniczaDoWyboru;
         Scanner scan = new Scanner(System.in);
+        System.out.println("CommitTest");
         System.out.println("Podaj długość cyklu procesora");
         Procesor worker = new Procesor(scan.nextInt());
         System.out.println("Wybierz sposob generowania listy procesów: \n0: hiperboliczny\n1:wykładniczy(^1/2)\n2:losowy");
