@@ -75,9 +75,8 @@ public class ProcesListGenerator {
             for(i = 0; i < tempList.size() && !(proc.getCzasWejscia() < tempList.get(i).getCzasWejscia()); i++);
             tempList.add(i, proc);  
         }
-        for(Proces p : tempList)
-            System.out.print("Proc:[" + p.getCzasWejscia() +","+ p.getLength()+"] ");
-        System.out.println();
+        
+        System.out.println("\nDla " + tempList.size() + " procesów");
         return tempList;
     }   
 }

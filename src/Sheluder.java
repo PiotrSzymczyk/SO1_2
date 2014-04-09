@@ -15,11 +15,6 @@ public class Sheluder {
     FIFO kolejkaFIFO;
     SJFW kolejkaSJFW;
     Rot kolejkaRot;
-    private Proces currentSjf;                  //obecnie wykonywany proces dla Sjf bez wywłaszczenia
-    private int waitingTimeFifo;            //suma czasów oczekiwania dla Fifo
-    private int waitingTimeSjf;             //suma czasów oczekiwania dla Sjf bez wywłaszczenia
-    private int waitingTimeSjfW;            //suma czasów oczekiwania dla Sjf z wywłaszczeniem
-    private int waitingTimeRot;             //suma czasów oczekiwania dla Rotacyjnego
     Procesor workerSJF;
     Procesor workerFIFO;
     Procesor workerSJFW;
@@ -34,7 +29,6 @@ public class Sheluder {
         workerFIFO = new Procesor(kwant);
         workerSJFW = new Procesor(kwant);
         workerRot = new Procesor(kwant);
-        currentSjf = null;
         }
     
     public void add(Proces proc){               //dodaje proces, do każdej z 4 list
@@ -48,10 +42,8 @@ public class Sheluder {
     public boolean sendToProcesor(){     //
         int licznik = 0;                // zmienna pomocnicza przy sprawdzaniu czy proces się wykonał
         if(!kolejkaSJF.isEmpty()){
-            System.out.print("weszłoSJF  , zwróciło :");
             licznik = workerSJF.przetworz(kolejkaSJF.get());
             
-            System.out.println(licznik);
             kolejkaSJF.increaseWaitingTime(workerSJF.getCykl());
             if(licznik <= 0){
                 kolejkaSJF.remove();
@@ -61,11 +53,9 @@ public class Sheluder {
             }
         }
         if(!kolejkaSJFW.isEmpty()){
-            System.out.print("weszłoSJFW , zwróciło :");
             
             licznik = workerSJFW.przetworz(kolejkaSJFW.get());
             
-            System.out.println(licznik);
             kolejkaSJFW.increaseWaitingTime(workerSJFW.getCykl());
             if(licznik <= 0){
                 kolejkaSJFW.remove();
@@ -74,11 +64,9 @@ public class Sheluder {
             }
         }
         if(!kolejkaFIFO.isEmpty()){
-            System.out.print("weszłoFIFO , zwróciło :");
         
             licznik = workerFIFO.przetworz(kolejkaFIFO.get());
             
-            System.out.println(licznik);
             kolejkaFIFO.increaseWaitingTime(workerFIFO.getCykl());
             if(licznik <= 0){
                 kolejkaFIFO.remove();
@@ -87,11 +75,9 @@ public class Sheluder {
             }
         }
         if(!kolejkaRot.isEmpty()){
-            System.out.print("weszłoROT  , zwróciło :");
         
             licznik = workerRot.przetworz(kolejkaRot.get());
             
-            System.out.println(licznik);
             kolejkaRot.increaseWaitingTime(workerRot.getCykl());
             if(licznik <= 0){
                 kolejkaRot.remove();
@@ -101,8 +87,8 @@ public class Sheluder {
             }
         }
         boolean anything = (!kolejkaSJF.kolejka.isEmpty() || !kolejkaSJFW.kolejka.isEmpty()|| !kolejkaRot.kolejka.isEmpty()|| !kolejkaFIFO.kolejka.isEmpty()); // zmienna pomocnicza pozwalająca sprawdzić
-        System.out.println(anything);
         if(!anything){
+            workerSJF.setClock(workerSJF.getClock()+workerSJF.getCykl());
         }
         return anything;                                                                                         //czy zostały jeszcze jakiekolwiek procesy na którejkolwiek liście
     }
@@ -112,9 +98,9 @@ public class Sheluder {
     }
     public void printTimes(int liczbaProcesow){
         System.out.println("średni czas oczekiwania dla SJF: "  +   kolejkaSJF.getWaitingTime()/liczbaProcesow);
-        System.out.println("średni czas oczekiwania dla SJF z wywłaszczeniem: "  +   kolejkaSJFW.getWaitingTime()/liczbaProcesow  );
-        System.out.println("średni czas oczekiwania dla Rotacyjnego: "  +   kolejkaRot.getWaitingTime()/liczbaProcesow  );
-        System.out.println("średni czas oczekiwania dla FiFo: "  +   kolejkaFIFO.getWaitingTime()/liczbaProcesow  );
+        System.out.println("średni czas oczekiwania dla SJF z wywłaszczeniem: "  +   kolejkaSJFW.getWaitingTime()/liczbaProcesow);
+        System.out.println("średni czas oczekiwania dla Rotacyjnego: "  +   kolejkaRot.getWaitingTime()/liczbaProcesow);
+        System.out.println("średni czas oczekiwania dla FiFo: "  +   kolejkaFIFO.getWaitingTime()/liczbaProcesow);
     }
     
     

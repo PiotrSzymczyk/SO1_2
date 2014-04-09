@@ -27,10 +27,11 @@ public class Main {
                         pomocniczaDoWyboru = sc.nextInt();
                         procesy = plg.hyperbolaGenerate(pomocniczaDoWyboru);
                         do{
-                           if(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
+                           while(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
                                 shlud.add(procesy.getFirst());
                                 procesy.remove();
                             }
+
                         }while(shlud.sendToProcesor() || procesy.size() > 0);
 
                         shlud.printTimes(pomocniczaDoWyboru);
@@ -44,7 +45,7 @@ public class Main {
                                    shlud.add(procesy.getFirst());
                                    procesy.remove();
 
-                           }
+                               }
                         }while(shlud.sendToProcesor() || procesy.size() > 0);
 
                         shlud.printTimes(pomocniczaDoWyboru);
@@ -53,19 +54,20 @@ public class Main {
                         pomocniczaDoWyboru = sc.nextInt();
                         procesy = plg.randGenerate(pomocniczaDoWyboru);
                         do{
-                           if(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
+                           while(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
                                 shlud.add(procesy.getFirst());
                                 procesy.remove();
                             }
+
                         }while(shlud.sendToProcesor() || procesy.size() > 0);
 
                         shlud.printTimes(pomocniczaDoWyboru);
                         break;
-                }
-            } catch (NoSuchElementException e){
+                } 
+            }catch (NoSuchElementException e){
                 System.out.println(" \nNieprawidłowa skłądnia piliku : Plik powinien byc postaci :\n"
-                        + "Długość_cyklu_procesora  Sposób_generowania_procesów  Ilość_procesów");
-            } 
+                       + "Długość_cyklu_procesora  Sposób_generowania_procesów  Ilość_procesów");
+            }
         }
     }
 }

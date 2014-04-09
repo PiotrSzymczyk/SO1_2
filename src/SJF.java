@@ -25,7 +25,7 @@ public class SJF extends Kolejka {
         obecnyProc = remove();
     }
     public boolean isEmpty(){
-        return kolejka.isEmpty() && obecnyProc != null;
+        return kolejka.isEmpty() && obecnyProc == null;
     }
     public Proces get(){
         if(obecnyProc == null){
