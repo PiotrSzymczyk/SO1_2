@@ -7,60 +7,65 @@
 *
 * @author Mateusz
 */
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 public class Main {
-    public static void main(String[]args){
+    public static void main(String[]args) throws FileNotFoundException{
         int pomocniczaDoWyboru;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Podaj długość cyklu procesora");
-        Sheluder shlud = new Sheluder(scan.nextInt());
-        System.out.println("Wybierz sposob generowania listy procesów: \n0: hiperboliczny\n1:wykładniczy(^1/2)\n2:losowy");
-        ProcesListGenerator plg = new ProcesListGenerator();
-        LinkedList<Proces> procesy = new LinkedList<Proces>();
+        Scanner sc = new Scanner(new FileReader("Test.txt"));
         
-        switch(scan.nextInt()){
-            case 0:
-                System.out.println("Podaj ilość procesów: ");
-                pomocniczaDoWyboru = scan.nextInt();
-                procesy = plg.hyperbolaGenerate(pomocniczaDoWyboru);
-                do{
-                   if(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
-                        shlud.add(procesy.getFirst());
-                        procesy.remove();
-                    }
-                }while(shlud.sendToProcesor() || procesy.size() > 0);
+        while(sc.hasNextInt()){
+            try{
+                Sheluder shlud = new Sheluder(sc.nextInt());
+                ProcesListGenerator plg = new ProcesListGenerator();
+                LinkedList<Proces> procesy = new LinkedList<>();
+                switch(sc.nextInt()){
+                    case 0:
+                        pomocniczaDoWyboru = sc.nextInt();
+                        procesy = plg.hyperbolaGenerate(pomocniczaDoWyboru);
+                        do{
+                           if(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
+                                shlud.add(procesy.getFirst());
+                                procesy.remove();
+                            }
+                        }while(shlud.sendToProcesor() || procesy.size() > 0);
 
-                shlud.printTimes(pomocniczaDoWyboru);
-                break;
-            case 1:
-                System.out.println("Podaj ilość procesów: ");
-                pomocniczaDoWyboru = scan.nextInt();
-                procesy = plg.sqrtGenerate(pomocniczaDoWyboru);
-                
-                do{
-                       while(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
-                           shlud.add(procesy.getFirst());
-                           procesy.remove();
-                       
-                   }
-                }while(shlud.sendToProcesor() || procesy.size() > 0);
+                        shlud.printTimes(pomocniczaDoWyboru);
+                        break;
+                    case 1:
+                        pomocniczaDoWyboru = sc.nextInt();
+                        procesy = plg.sqrtGenerate(pomocniczaDoWyboru);
 
-                shlud.printTimes(pomocniczaDoWyboru);
-                break;
-            case 2:
-                System.out.println("Podaj ilość procesów: ");
-                pomocniczaDoWyboru = scan.nextInt();
-                procesy = plg.randGenerate(pomocniczaDoWyboru);
-                do{
-                   if(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
-                        shlud.add(procesy.getFirst());
-                        procesy.remove();
-                    }
-                }while(shlud.sendToProcesor() || procesy.size() > 0);
+                        do{
+                               while(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
+                                   shlud.add(procesy.getFirst());
+                                   procesy.remove();
 
-                shlud.printTimes(pomocniczaDoWyboru);
-                break;
+                           }
+                        }while(shlud.sendToProcesor() || procesy.size() > 0);
+
+                        shlud.printTimes(pomocniczaDoWyboru);
+                        break;
+                    case 2:
+                        pomocniczaDoWyboru = sc.nextInt();
+                        procesy = plg.randGenerate(pomocniczaDoWyboru);
+                        do{
+                           if(procesy.size() > 0 && procesy.getFirst().getCzasWejscia() <= shlud.workerSJF.getClock()){
+                                shlud.add(procesy.getFirst());
+                                procesy.remove();
+                            }
+                        }while(shlud.sendToProcesor() || procesy.size() > 0);
+
+                        shlud.printTimes(pomocniczaDoWyboru);
+                        break;
+                }
+            } catch (NoSuchElementException e){
+                System.out.println(" \nNieprawidłowa skłądnia piliku : Plik powinien byc postaci :\n"
+                        + "Długość_cyklu_procesora  Sposób_generowania_procesów  Ilość_procesów");
+            } 
         }
     }
 }

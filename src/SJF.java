@@ -10,6 +10,7 @@
 public class SJF extends Kolejka {
     private Proces obecnyProc;
     public SJF(){
+        super();
         obecnyProc = null;
     }
     public void add(Proces proc){
