@@ -41,4 +41,9 @@ public class SJF extends Kolejka {
             obecnyProc = null;
             return obecnyProc;
     }
+    public void increaseWaitingTime(int czas){
+        if(obecnyProc != null){
+            waitingTime += kolejka.size()*czas;
+        } else waitingTime += (kolejka.size()-1)*czas;
+    }
 }

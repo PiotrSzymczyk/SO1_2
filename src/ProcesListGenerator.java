@@ -21,6 +21,7 @@ public class ProcesListGenerator {
             list.add(new Proces( (int) (Math.random() * safeClock) ));
             safeClock += list.getLast().getLength() + 1;
         }
+        System.out.print("\nrandGenerate ");
         return sort(list);
     }
     
@@ -35,10 +36,11 @@ public class ProcesListGenerator {
         int safeClock = 0;
         int len;
         for(int num =0; num < arrayLength;){
-            len = 29/++num;
-            list.add(new Proces((int)(Math.random() * safeClock), len + 1 ));
+            len = (39 + 3*num)/++num;
+            list.add(new Proces((int)(Math.random() * safeClock), len));
             safeClock += list.getLast().getLength() + 1;
         }
+        System.out.print("\nhyperbolaGenerate ");
         return sort(list);
     }
     
@@ -57,6 +59,7 @@ public class ProcesListGenerator {
             list.add(new Proces((int)(Math.random() * safeClock), len + 1 ));
             safeClock += list.getLast().getLength() + 1;
         }
+        System.out.print("\nsqrtGenerate ");
         return sort(list);
     }
     
@@ -76,7 +79,7 @@ public class ProcesListGenerator {
             tempList.add(i, proc);  
         }
         
-        System.out.println("\nDla " + tempList.size() + " procesów");
+        System.out.println("dla " + tempList.size() + " procesów");
         return tempList;
     }   
 }

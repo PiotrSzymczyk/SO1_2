@@ -92,10 +92,7 @@ public class Sheluder {
         }
         return anything;                                                                                         //czy zostały jeszcze jakiekolwiek procesy na którejkolwiek liście
     }
-    
-    public void increaseWaitingTime(){
-        
-    }
+
     public void printTimes(int liczbaProcesow){
         System.out.println("średni czas oczekiwania dla SJF: "  +   kolejkaSJF.getWaitingTime()/liczbaProcesow);
         System.out.println("średni czas oczekiwania dla SJF z wywłaszczeniem: "  +   kolejkaSJFW.getWaitingTime()/liczbaProcesow);
