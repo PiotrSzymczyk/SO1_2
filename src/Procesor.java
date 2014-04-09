@@ -31,8 +31,11 @@ public class Procesor {
         clock = val;
     }
     
-    public void setKwantCzasu(int kwant){
+    public void setCyklProc(int kwant){
         cycle = kwant;
+    }
+    public int getCykl(){
+        return cycle;
     }
     
     public int getClock(){
